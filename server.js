@@ -1,9 +1,22 @@
-const express = require('express');
+const express = require ('express');
+const connectDB = require ('./config/db');
 
-const app = express();
+const app = express ();
 
-app.get('/', (req, res) => res.send('API Running'))
+//connect db
+connectDB ();
 
-const PORT =  process.env.PORT || 5000//for heroku
+//init middleware
+app.use(express.json({extended: false}))
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+app.get ('/', (req, res) => res.send ('API Running'));
+
+//define routes
+app.use ('/api/users', require ('./routes/api/users'));
+app.use ('/api/auth', require ('./routes/api/auth'));
+app.use ('/api/profile', require ('./routes/api/profile'));
+app.use ('/api/posts', require ('./routes/api/posts'));
+
+const PORT = process.env.PORT || 5000; //for heroku
+
+app.listen (PORT, () => console.log (`Server started on port ${PORT}`));
