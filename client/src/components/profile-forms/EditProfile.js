@@ -67,11 +67,21 @@ const EditProfile = ({
             ? ''
             : profile.githubusername,
           bio: loading || !profile.bio ? '' : profile.bio,
-          twitter: loading || !profile.social ? '' : profile.social.twitter,
-          facebook: loading || !profile.social ? '' : profile.social.facebook,
-          linkedin: loading || !profile.social ? '' : profile.social.linkedin,
-          youtube: loading || !profile.social ? '' : profile.social.youtube,
-          instagram: loading || !profile.social ? '' : profile.social.instagram,
+          twitter: loading || !profile.social.twitter
+            ? ''
+            : profile.social.twitter,
+          facebook: loading || !profile.social.facebook
+            ? ''
+            : profile.social.facebook,
+          linkedin: loading || !profile.social.linkedin
+            ? ''
+            : profile.social.linkedin,
+          youtube: loading || !profile.social.youtube
+            ? ''
+            : profile.social.youtube,
+          instagram: loading || !profile.social.instagram
+            ? ''
+            : profile.social.instagram,
         });
       }
     },
@@ -104,11 +114,10 @@ const EditProfile = ({
   return (
     <Fragment>
       <h1 className="large text-primary">
-        Create Your Profile
+        Edit Your Profile
       </h1>
       <p className="lead">
-        <i className="fas fa-user" /> Let's get some information to make your
-        profile stand out
+        <i className="fas fa-user" /> Add some changes to your profile
       </p>
       <small>* = required field</small>
       <form className="form" onSubmit={e => onSubmit (e)}>
