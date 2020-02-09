@@ -14,6 +14,8 @@ import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
 import Posts from './components/posts/Posts';
 import Post from './components/post/Post';
+import Projects from './components/projects/Projects'
+import Project from './components/project/Project'
 
 import PrivateRoute from './components/routing/PrivateRoute';
 
@@ -69,6 +71,8 @@ const App = () => {
               />
               <PrivateRoute exact path="/posts" component={Posts} />
               <PrivateRoute exact path="/posts/:id" component={Post} />
+              <PrivateRoute exact path="/projects" component={Projects} />
+              <PrivateRoute exact path="/projects/:id" component={Project} />
             </Switch>
           </section>
         </Fragment>
