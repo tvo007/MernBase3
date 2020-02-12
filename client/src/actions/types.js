@@ -22,6 +22,11 @@ export const DELETE_POST = 'DELETE_POST'
 export const ADD_POST = 'ADD_POST'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const REMOVE_COMMENT = 'REMOVE_COMMENT'
+export const GET_PROJECTS = 'GET_PROJECTS'
+export const PROJECT_ERROR = 'PROJECT_ERROR'
+export const DELETE_PROJECT = 'DELETE_PROJECT'
+export const GET_PROJECT = 'GET_PROJECT'
+
 
 
 
