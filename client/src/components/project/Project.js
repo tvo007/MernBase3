@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import ProjectItem from '../projects/ProjectItem';
+import TaskForm from '../project/TaskForm';
+import TaskItem from '../project/TaskItem';
 import {getProject} from '../../actions/project';
 
 const Project = ({getProject, project: {project, loading}, match}) => {
@@ -21,7 +23,12 @@ const Project = ({getProject, project: {project, loading}, match}) => {
           Back to Projects
         </Link>
         <ProjectItem project={project} showActions={false} />
-
+        <TaskForm projectId={project._id} />
+        <div className='comments'>
+            {project.tasks.map(task => (
+                <TaskItem key={task._id} task={task} projectId={project._id} />
+            ))}
+        </div>
       </Fragment>;
 };
 

@@ -22,10 +22,14 @@ export const DELETE_POST = 'DELETE_POST'
 export const ADD_POST = 'ADD_POST'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const REMOVE_COMMENT = 'REMOVE_COMMENT'
+//-----projects types 
 export const GET_PROJECTS = 'GET_PROJECTS'
 export const PROJECT_ERROR = 'PROJECT_ERROR'
 export const DELETE_PROJECT = 'DELETE_PROJECT'
 export const GET_PROJECT = 'GET_PROJECT'
+export const ADD_PROJECT = 'ADD_PROJECT'
+export const ADD_TASK = 'ADD_TASK'
+export const REMOVE_TASK = 'REMOVE_TASK'
 
 
 

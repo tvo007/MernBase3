@@ -17,12 +17,20 @@ const User = require ('../../models/User');
 
 router.post (
   '/',
-  [auth, [check ('title', 'Text is required').not ().isEmpty ()]],
+  [
+    auth,
+    [
+      check ('title', 'Text is required').not ().isEmpty (),
+      check ('description', 'Description is required').not ().isEmpty (),
+    ],
+  ],
   async (req, res) => {
     const errors = validationResult (req);
     if (!errors.isEmpty ()) {
       return res.status (400).json ({errors: errors.array ()});
     }
+
+    // const {title, description} = req.body;
 
     try {
       const user = await User.findById (req.user.id).select ('-password');
@@ -118,7 +126,7 @@ router.post (
       check ('taskDescription', 'Task description is required')
         .not ()
         .isEmpty (),
-    ],
+    ]
   ],
   async (req, res) => {
     const errors = validationResult (req);

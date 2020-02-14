@@ -4,6 +4,7 @@ import Spinner from '../layout/Spinner';
 import {connect} from 'react-redux';
 import {getProjects} from '../../actions/project';
 import ProjectItem from '../projects/ProjectItem';
+import ProjectForm from '../projects/ProjectForm';
 
 const Projects = ({getProjects, project: {projects, loading}}) => {
   useEffect (
@@ -20,6 +21,7 @@ const Projects = ({getProjects, project: {projects, loading}}) => {
         <p className="lead">
           <i className="fas fa-user" /> Let's build something together!
         </p>
+        <ProjectForm />
         <div className="posts">
           {projects.map (project => (
             <ProjectItem key={project._id} project={project} />

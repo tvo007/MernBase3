@@ -3,6 +3,9 @@ import {
   PROJECT_ERROR,
   DELETE_PROJECT,
   GET_PROJECT,
+  ADD_PROJECT,
+  ADD_TASK,
+  REMOVE_TASK,
 } from '../actions/types';
 
 const initialState = {
@@ -28,6 +31,12 @@ export default function (state = initialState, action) {
         project: payload,
         loading: false,
       };
+    case ADD_PROJECT:
+      return {
+        ...state,
+        projects: [payload, ...state.projects],
+        loading: false,
+      };
     case DELETE_PROJECT:
       return {
         ...state,
@@ -39,6 +48,21 @@ export default function (state = initialState, action) {
         ...state,
         error: payload,
         loading: false,
+      };
+    case ADD_TASK:
+      return {
+        ...state,
+        project: {...state.project, tasks: payload},
+        loading: false,
+      };
+    case REMOVE_TASK:
+      return {
+        ...state,
+        task: {
+          ...state.project,
+          tasks: state.project.tasks.filter (task => task._id !== payload),
+          loading: false,
+        },
       };
     default:
       return state;
