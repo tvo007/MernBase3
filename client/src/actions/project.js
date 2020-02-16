@@ -8,6 +8,7 @@ import {
   ADD_PROJECT,
   ADD_TASK,
   REMOVE_TASK,
+  TOGGLE_TASK_COMPLETED,
 } from './types';
 
 //get projects
@@ -133,6 +134,28 @@ export const deleteTask = (projectId, taskId) => async dispatch => {
 
     dispatch (setAlert ('Task Removed', 'success'));
   } catch (err) {
+    dispatch ({
+      type: PROJECT_ERROR,
+      payload: {msg: err.response.statusText, status: err.response.status},
+    });
+  }
+};
+
+//toggle task completed
+export const toggleTaskCompleted = (projectId, taskId) => async dispatch => {
+  try {
+    const res = await axios.put (`/api/projects/tasks/${projectId}/${taskId}/isCompleted`);
+
+    dispatch ({
+      type: TOGGLE_TASK_COMPLETED,
+      payload: {taskId, isCompleted: res.data}
+    });
+
+    //res.data returns project.tasks array
+
+    dispatch (setAlert ('Task status has changed!', 'success'));
+  } catch (err) {
+    console.log(err)
     dispatch ({
       type: PROJECT_ERROR,
       payload: {msg: err.response.statusText, status: err.response.status},

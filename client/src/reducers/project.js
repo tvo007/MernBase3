@@ -6,6 +6,7 @@ import {
   ADD_PROJECT,
   ADD_TASK,
   REMOVE_TASK,
+  TOGGLE_TASK_COMPLETED,
 } from '../actions/types';
 
 const initialState = {
@@ -49,6 +50,20 @@ export default function (state = initialState, action) {
         error: payload,
         loading: false,
       };
+    case TOGGLE_TASK_COMPLETED:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          tasks: state.project.tasks.map (
+            (task, index) =>
+              task._id === payload.taskId
+                ? {...task, isCompleted: payload.isCompleted[index].isCompleted}
+                : task
+          ),
+        },
+        loading: false,
+      };
     case ADD_TASK:
       return {
         ...state,
@@ -58,13 +73,30 @@ export default function (state = initialState, action) {
     case REMOVE_TASK:
       return {
         ...state,
-        task: {
+        project: {
           ...state.project,
           tasks: state.project.tasks.filter (task => task._id !== payload),
-          loading: false,
         },
+        loading: false,
       };
     default:
       return state;
   }
 }
+
+/**
+ * case TOGGLE_TASK_COMPLETED:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          tasks: state.tasks.map (
+            task =>
+              task._id === payload.taskId
+                ? {...task, isCompleted: payload.isCompleted}
+                : task
+          ),
+        },
+        loading: false,
+      };
+ */

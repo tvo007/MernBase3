@@ -126,7 +126,7 @@ router.post (
       check ('taskDescription', 'Task description is required')
         .not ()
         .isEmpty (),
-    ]
+    ],
   ],
   async (req, res) => {
     const errors = validationResult (req);
@@ -183,6 +183,50 @@ router.delete ('/tasks/:id/:task_id', auth, async (req, res) => {
       .indexOf (req.params.task_id);
 
     project.tasks.splice (removeIndex, 1);
+
+    await project.save ();
+
+    res.json (project.tasks);
+  } catch (err) {
+    console.error (err.message);
+    res.status (500).send ('Server Error');
+  }
+});
+
+//-----------
+//change to toggleComplete
+//@route put api/projects/tasks/:id/:task_id/isCompleted
+//desc: like a post
+//access private
+router.put ('/tasks/:id/:task_id/isCompleted', auth, async (req, res) => {
+  try {
+    const project = await Project.findById (req.params.id);
+
+    // Pull out task
+    const task = project.tasks.find (task => task.id === req.params.task_id);
+
+    // Make sure task exists
+    if (!task) {
+      return res.status (404).json ({msg: 'Task does not exist'});
+    }
+
+    // Check user
+    if (task.user.toString () !== req.user.id) {
+      return res.status (401).json ({msg: 'User not authorized'});
+    }
+
+    task.isCompleted = !task.isCompleted;
+
+    //check if post has already been liked
+
+    // if (
+    //   post.likes.filter (like => like.user.toString () === req.user.id).length >
+    //   0
+    // ) {
+    //   return res.status (400).json ({msg: 'Post already liked.'});
+    // }
+
+    // post.likes.unshift ({user: req.user.id});
 
     await project.save ();
 
