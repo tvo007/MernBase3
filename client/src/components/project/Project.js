@@ -6,6 +6,8 @@ import Spinner from '../layout/Spinner';
 import ProjectItem from '../projects/ProjectItem';
 import TaskForm from '../project/TaskForm';
 import TaskItem from '../project/TaskItem';
+import TicketForm from '../project/TicketForm';
+import TicketItem from '../project/TicketItem';
 import {getProject} from '../../actions/project';
 
 const Project = ({getProject, project: {project, loading}, match}) => {
@@ -27,6 +29,12 @@ const Project = ({getProject, project: {project, loading}, match}) => {
         <div className='comments'>
             {project.tasks.map(task => (
                 <TaskItem key={task._id} task={task} projectId={project._id} />
+            ))}
+        </div>
+        <TicketForm projectId={project._id} />
+        <div className='comments'>
+            {project.tickets.map(ticket => (
+                <TicketItem key={ticket._id} ticket={ticket} projectId={project._id} />
             ))}
         </div>
       </Fragment>;

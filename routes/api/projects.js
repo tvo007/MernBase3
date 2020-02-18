@@ -263,17 +263,17 @@ router.post (
       const project = await Project.findById (req.params.id);
 
       const newTicket = {
-        taskDescription: req.body.ticketDescription,
+        ticketDescription: req.body.ticketDescription,
         name: user.name,
         avatar: user.avatar,
         user: req.user.id,
       };
 
-      project.tasks.unshift (newTask);
+      project.tickets.unshift (newTicket);
 
       await project.save ();
 
-      res.json (project.tasks);
+      res.json (project.tickets);
     } catch (err) {
       console.error (err.message);
       res.status (500).send ('Server Error');
@@ -288,9 +288,9 @@ router.delete ('/tickets/:id/:ticket_id', auth, async (req, res) => {
   try {
     const project = await Project.findById (req.params.id);
 
-    // Pull out task
+    // Pull out ticket
     const ticket = project.tickets.find (
-      task => ticket.id === req.params.ticket_id
+      ticket => ticket.id === req.params.ticket_id
     );
 
     // Make sure task exists
@@ -309,6 +309,41 @@ router.delete ('/tickets/:id/:ticket_id', auth, async (req, res) => {
       .indexOf (req.params.ticket_id);
 
     project.tickets.splice (removeIndex, 1);
+
+    await project.save ();
+
+    res.json (project.tickets);
+  } catch (err) {
+    console.error (err.message);
+    res.status (500).send ('Server Error');
+  }
+});
+
+//-----------
+//change to toggleTicketComplete
+//@route put api/projects/tickets/:id/:ticket_id/isCompleted
+//desc: toggles ticket completed state
+//access private
+router.put ('/tickets/:id/:ticket_id/isCompleted', auth, async (req, res) => {
+  try {
+    const project = await Project.findById (req.params.id);
+
+    // Pull out ticket
+    const ticket = project.tickets.find (
+      ticket => ticket.id === req.params.ticket_id
+    );
+
+    // Make sure ticket exists
+    if (!ticket) {
+      return res.status (404).json ({msg: 'Ticket does not exist'});
+    }
+
+    // Check user
+    if (ticket.user.toString () !== req.user.id) {
+      return res.status (401).json ({msg: 'User not authorized'});
+    }
+
+    ticket.isCompleted = !ticket.isCompleted;
 
     await project.save ();
 

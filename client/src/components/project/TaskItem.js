@@ -36,7 +36,7 @@ const TaskItem = ({
       </div>
       <div>
 
-        <h1 className="my-1" style={taskCompletedStyling}>{taskDescription}</h1>
+        <h1 className="my-1" style={taskCompletedStyling}>Task: {taskDescription}</h1>
 
         <p className="post-date">
           Posted on <Moment format="YYYY/MM/DD">{date}</Moment>

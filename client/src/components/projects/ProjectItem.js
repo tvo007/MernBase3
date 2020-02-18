@@ -37,6 +37,12 @@ const ProjectItem = ({
               {tasks.length > 0 &&
                 <span className="comment-count">{tasks.length}</span>}
             </Link>
+            <Link to={`/projects/${_id}`} className="btn btn-primary">
+              Tickets
+              {' '}
+              {tickets.length > 0 &&
+                <span className="comment-count">{tasks.length}</span>}
+            </Link>
             {!auth.loading &&
               user === auth.user._id &&
               <button

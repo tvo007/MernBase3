@@ -7,6 +7,9 @@ import {
   ADD_TASK,
   REMOVE_TASK,
   TOGGLE_TASK_COMPLETED,
+  ADD_TICKET,
+  REMOVE_TICKET,
+  TOGGLE_TICKET_COMPLETED,
 } from '../actions/types';
 
 const initialState = {
@@ -64,10 +67,35 @@ export default function (state = initialState, action) {
         },
         loading: false,
       };
+
+    case TOGGLE_TICKET_COMPLETED:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          tickets: state.project.tickets.map (
+            (ticket, index) =>
+              ticket._id === payload.ticketId
+                ? {
+                    ...ticket,
+                    isCompleted: payload.isCompleted[index].isCompleted,
+                  }
+                : ticket
+          ),
+        },
+        loading: false,
+      };
+    //^^subject to change
     case ADD_TASK:
       return {
         ...state,
         project: {...state.project, tasks: payload},
+        loading: false,
+      };
+    case ADD_TICKET:
+      return {
+        ...state,
+        project: {...state.project, tickets: payload},
         loading: false,
       };
     case REMOVE_TASK:
@@ -79,24 +107,18 @@ export default function (state = initialState, action) {
         },
         loading: false,
       };
-    default:
-      return state;
-  }
-}
-
-/**
- * case TOGGLE_TASK_COMPLETED:
+    case REMOVE_TICKET:
       return {
         ...state,
         project: {
           ...state.project,
-          tasks: state.tasks.map (
-            task =>
-              task._id === payload.taskId
-                ? {...task, isCompleted: payload.isCompleted}
-                : task
+          tickets: state.project.tickets.filter (
+            ticket => ticket._id !== payload
           ),
         },
         loading: false,
       };
- */
+    default:
+      return state;
+  }
+}

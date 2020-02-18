@@ -31,7 +31,10 @@ export const ADD_PROJECT = 'ADD_PROJECT'
 export const ADD_TASK = 'ADD_TASK'
 export const REMOVE_TASK = 'REMOVE_TASK'
 export const TOGGLE_TASK_COMPLETED = 'TOGGLE_TASK_COMPLETED'
-
+//---ticket types
+export const ADD_TICKET = 'ADD_TICKET'
+export const REMOVE_TICKET = 'REMOVE_TICKET'
+export const TOGGLE_TICKET_COMPLETED = 'TOGGLE_TICKET_COMPLETED'
 
 
 
